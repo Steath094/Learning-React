@@ -1,14 +1,18 @@
 import { useState ,useCallback ,useEffect , useRef} from 'react'
-
+import Notification from './notification.jsx'
 
   function App() {
   const [length, setLength] = useState(8)
   const [numberAllowed, setNumberAllowed] = useState(false)
   const [charactersAllowed, setCharactersAllowed] = useState(false)
   const [password,setPassword] = useState()
+  const[showNotification,setShowNotification] = useState(false);
 
   //use ref hook
   const passwordRef = useRef(null)
+
+
+  // password generator using hook to optimize the generating criteria
   const passwordGenerator = useCallback(()=>{
     let pass = ""
     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -26,13 +30,19 @@ import { useState ,useCallback ,useEffect , useRef} from 'react'
     passwordRef.current?.select();
     // passwordRef.current?.setSelectionRange(0,3)
     window.navigator.clipboard.writeText(password)
+    // setting the notification to show and then dissappear
+    setShowNotification(true);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 1500);
   },[password])
+  // re rending the page if any of the parameter got changed
   useEffect(()=>{
     passwordGenerator()
   },[length,numberAllowed,charactersAllowed,passwordGenerator])
   return (
     <>
-    <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 bg-gray-800 text-orange-500">
+    <div className="w-full max-w-md mx-auto shadow-md rounded-lg px-4 py-3 my-8 bg-gray-800 text-black font-bold">
       <h1 className='text-white text-center my-3'>Password generator</h1>
     <div className="flex shadow rounded-lg overflow-hidden mb-4">
         <input
@@ -41,13 +51,14 @@ import { useState ,useCallback ,useEffect , useRef} from 'react'
             className="outline-none w-full py-1 px-3"
             placeholder="Password"
             readOnly
+            //taking ref of the password generated
             ref={passwordRef}
         />
         <button
         onClick={copyPasswordToClipboard}
         className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'
         >copy</button>
-        
+        <Notification message="Password copied successfully!" show={showNotification} />
     </div>
     <div className='flex text-sm gap-x-2'>
       <div className='flex items-center gap-x-1'>
@@ -55,7 +66,7 @@ import { useState ,useCallback ,useEffect , useRef} from 'react'
         type="range"
         min={8}
         max={100}
-        value={length}
+        value={length}  
          className='cursor-pointer'
          onChange={(e) => {setLength(e.target.value)}}
           />
