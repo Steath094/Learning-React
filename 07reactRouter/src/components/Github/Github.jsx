@@ -12,8 +12,13 @@ function Github() {
     // },[])
     // console.log(data);
     return (
-        <div className='text-center m-4 bg-gray-600 text-white p-4 text-3xl'>Github followers: {data.followers}
-        <img src={data.avatar_url} alt="Git Picture" width={300}/>
+        <div className=' flex gap-16 text-center m-4 bg-gray-600 text-white p-4 text-3xl'>
+        <img className='rounded-full border-2 border-black' src={data.avatar_url} alt="Git Picture" width={300}/>
+        <div className='flex flex-col gap-4 items-start text-black'>
+            <span>Name: <span className='text-white'>{data.name}</span></span>
+            <span>Github Followers: <span className='text-white'>{data.followers}</span></span>
+            <span>Github Following: <span className='text-white'>{data.following}</span></span>
+        </div>
         </div>
     )
 }
