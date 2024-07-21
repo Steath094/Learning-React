@@ -1,4 +1,4 @@
-import conf from "../conf/conf";
+import conf from "../conf/conf.js";
 import { Client, Account, ID , Databases, Storage , Query } from "appwrite";
 
 export class Service{
@@ -21,7 +21,6 @@ export class Service{
                 conf.appwriteCollectionId,
                 slug,{
                     title,
-                    slug,
                     content,
                     featuredImage,
                     status,
@@ -39,7 +38,7 @@ export class Service{
                 slug,{
                     title,
                     content,
-                    featuredImage,
+                    featuredImage,  
                     status
                     })
         } catch (error) {
@@ -56,7 +55,7 @@ export class Service{
             return true;
         } catch (error) {
             console.log("AppWrite service :: deletePost :: error", error);
-            return false;
+            return false;   
         }
     }
     async getPost(slug){
@@ -72,7 +71,7 @@ export class Service{
         }
     }
 
-    async getPosts(queries = [Query.equal("status", ["active"])]){
+    async getPosts(queries = [Query.equal("status", "active")]){
         try {
             return await this.databases.listDocuments(
                 conf.appwriteDatabaseId,

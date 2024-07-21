@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import authService from './appwrite/auth'
 import { login, logout } from './store/authSlice';
 import { Outlet } from 'react-router-dom';
-import { Footer } from './components';
+import { Footer,Header } from './components';
 function App() {
   const [loading,setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -23,9 +23,9 @@ function App() {
   return !loading ? (
     <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
       <div className='w-full block'>
-        {/* <Header/> */}
+        <Header/>
         <main>
-          Todo: {/* <Outlet/> */}
+          Todo: <Outlet/>
         </main>
         <Footer/>
       </div>
